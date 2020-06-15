@@ -1,38 +1,43 @@
-import express from 'express';
-import sha256 from 'sha256';
 import User from '../models/user';
+import jwt from 'jsonwebtoken';
+const SECRET = process.env.SECRET;
 
-const userController = express.Router();
-/**
- * GET/
- * retrieve and display all Users in the User Model
- */
-userController.get('/', (req, res) => {
-  User.find({}, (err, result) => {
-    res.status(200).json({
-      data: result,
-    });
-  });
-});
-/**
- * POST/
- * Add a new User to your database
- */
-userController.post('/add-user', (req, res) => {
-  const { email, password } = req.body;
+module.exports = {
+  login,
+  signup,
+};
 
-  const userData = {
-    email,
-    hashedPassword: sha256(password),
-  };
-  const newUser = new User(userData);
-  newUser
-    .save()
-    .then((data) => {
-      res.status(200).send(data);
-    })
-    .catch(() => {
-      res.status(400).send('unable to save to database');
+async function login(req, res) {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) return res.status(401).json({ err: 'bad credentials' });
+    user.comparePassword(req.body.pw, (err, isMatch) => {
+      if (isMatch) {
+        const token = createJWT(user);
+        res.json({ token });
+      } else {
+        return res.status(401).json({ err: 'bad credentials' });
+      }
     });
-});
-export default userController;
+  } catch (err) {
+    return res.status(401).json(err);
+  }
+}
+
+async function signup(req, res) {
+  const user = new User(req.body);
+  try {
+    await user.save();
+    const token = createJWT(user);
+    res.json({ token });
+  } catch (err) {
+    // Probably a duplicate email
+    res.status(400).json(err);
+  }
+}
+
+/*--- Helper Functions ---*/
+
+function createJWT(user) {
+  return jwt.sign({ user }, SECRET, { expiresIn: '24h' });
+}
