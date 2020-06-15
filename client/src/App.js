@@ -17,7 +17,6 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
       <Route
         path="/"
         render={({ history }) => (
@@ -43,7 +42,6 @@ class App extends Component {
           </div>
         )}
       />
-    </Router>
     );
   }
 }
