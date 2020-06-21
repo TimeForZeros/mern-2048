@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 // import logo from "./logo.svg";
 import './App.css';
-import { Route, Switch, Redirect, Link, withRouter, Router } from 'react-router-dom';
+import {
+  Route, Switch, Redirect, Link, withRouter, Router,
+} from 'react-router-dom';
 import * as scoreAPI from './utils/score-api';
 // import userService from "./utils/userService";
 // import SignupPage from "./pages/SignUpPage/SignUpPage";
@@ -9,6 +11,7 @@ import * as scoreAPI from './utils/score-api';
 import NavBar from './components/NavBar/NavBar';
 import GameBoard from './components/GameBoard/GameBoard';
 import Footer from './components/Footer/Footer';
+
 class App extends Component {
   constructor() {
     super();

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { useSwipeable, Swipeable } from "react-swipeable";
 import * as scoreAPI from "../../utils/score-api";
+import * as _ from 'lodash';
 import * as highScoreAPI from "../../utils/highScore-api";
 import {
   BrowserRouter as Router,
@@ -51,7 +52,7 @@ let renderUpdate = boardUpdate => {
 
 // check for lose
 
-let spawnInit = arr => {
+const spawnInit = arr => {
   let board = arr.slice();
   for (var i = 0; i < 2; ) {
     let col = randomNum();
@@ -63,7 +64,7 @@ let spawnInit = arr => {
   }
 };
 
-let initBoard = () => {
+const initBoard = () => {
   let board = [
     [0, 0, 0, 0], //Row 1 idx 0
     [0, 0, 0, 0], //Row 2 idx 1
@@ -89,44 +90,35 @@ class GameBoard extends Component {
     };
   }
 
-  loseCheck = arr => {
+  loseCheck = (arr) => {
     let zeros = 0;
     let counter = 0;
     arr.forEach(row => {
-      // if (zeros > 0) {
-      //   return zeros;
-      // }
       row.forEach(e => {
         if (e === 0) {
           zeros++;
         }
       });
     });
-    console.log(zeros);
     if (zeros === 0) {
-      console.log("now!!!!");
       let scoreKeep = this.state.score;
       let movesArr = ["up", "down", "left", "right"];
       movesArr.forEach(e => {
-        console.log(this.state.score);
         this.moves[`${e}`](arr);
-        console.log(this.state.score + e);
         if (scoreKeep === this.state.score) {
           this.setState({ score: scoreKeep });
-          console.log(counter + "counter");
           counter++;
         }
       });
       if (counter === 4) {
         // this.setState({ score: scoreKeep });
-        console.log("true");
         return true;
       } else return false;
     } else return false;
   };
 
   moves = {
-    left: arr => {
+    left: (arr) => {
       let resultArr = arr.map(elArr => {
         return this.arrayManip.fill(
           this.arrayManip.merge(this.arrayManip.filter(elArr))
@@ -134,7 +126,7 @@ class GameBoard extends Component {
       });
       return resultArr;
     },
-    right: arr => {
+    right: (arr) => {
       let resultArr = arr.map(elArr => {
         return this.arrayManip.reverse(
           this.arrayManip.fill(
@@ -214,9 +206,9 @@ class GameBoard extends Component {
   boardRender = arr => {
     let newArr = [];
     //function that goes through the board array rows
-    arr.forEach(function(colArr, rowIdx) {
+    arr.forEach((colArr, rowIdx) => {
       //function that goes through the column index of the row arrays
-      colArr.forEach(function(cell, colIdx) {
+      colArr.forEach((cell, colIdx) => {
         newArr.push(
           React.createElement("div", {
             id: `c${colIdx}r${rowIdx}`,
@@ -232,7 +224,6 @@ class GameBoard extends Component {
         );
       });
     });
-    // this.setState({board: newArr});
     return newArr;
   };
 
@@ -288,7 +279,7 @@ class GameBoard extends Component {
         }
       };
     }
-    let leaderBoard = await scoreAPI.index();
+    const leaderBoard = await scoreAPI.index();
     this.setState({ leaderBoard });
     // const leaderBoard = await scoreAPI.index();
     // leaderArr.push(leaderBoard);
