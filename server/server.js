@@ -2,7 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import config from 'config';
-import { userController } from './controllers';
+import * as routes from './routes';
+
 
 const app = express();
 
@@ -10,8 +11,9 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// use all controllers(APIs) here
-app.use('/', userController);
+// use all controllers(APIs) herep);
+app.use('/', routes);
+
 // Uncomment and modify the route if you want to use any controllers
 // app.use('/abc', abcController);
 // app.use('/xyz', xyzController);

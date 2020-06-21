@@ -1,4 +1,4 @@
-var HighScore = require('../models/highScore');
+import { HighScore } from '../models/highScore';
 
 module.exports = {
     index,

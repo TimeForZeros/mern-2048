@@ -1,0 +1,24 @@
+{
+  "name": "mern-2048",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "concurrently": "^5.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"cd server && nodemon\" \"cd client && npm start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TimeForZeros/mern-2048.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TimeForZeros/mern-2048/issues"
+  },
+  "homepage": "https://github.com/TimeForZeros/mern-2048#readme"
+}
