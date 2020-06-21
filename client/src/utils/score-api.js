@@ -1,4 +1,4 @@
-const BASE_URL = '/api/score/';
+const BASE_URL = '/api/scores/';
 
 export function create(score) {
     return fetch(BASE_URL, {
