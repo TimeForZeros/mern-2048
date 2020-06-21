@@ -1,4 +1,4 @@
-import Score from '../models/score';
+const Score = require('../models/score');
 
 async function index(req, res) {
   const score = await Score.find({}).sort({ highScore: -1 }).limit(10);
